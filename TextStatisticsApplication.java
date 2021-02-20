@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.util.Arrays;
 
 public class TextStatisticsApplication extends Application {
-    
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -35,7 +35,8 @@ public class TextStatisticsApplication extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 int totalCharacters = t1.length();
-                String[] words = t1.split(" ");
+                String withoutPunct = t1.replaceAll("\\p{Punct}", "");
+                String[] words = withoutPunct.split(" ");
                 long numOfWords = Arrays.stream(words)
                         .filter(word -> !word.isEmpty())
                         .count();
@@ -58,6 +59,7 @@ public class TextStatisticsApplication extends Application {
         layout.setBottom(hbox);
 
         Scene view = new Scene(layout);
+        stage.setTitle("Text Statistics");
         stage.setScene(view);
         stage.show();
     }
